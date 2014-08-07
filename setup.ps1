@@ -1,4 +1,7 @@
 # http://selenium-release.storage.googleapis.com/index.html
+# https://code.google.com/p/selenium/wiki/Grid2
+# https://code.google.com/p/selenium/downloads/list
+# http://selenium-release.storage.googleapis.com/index.html
 
 $ErrorActionPreference = 'stop'
 $WarningPreference = 'stop'
