@@ -176,6 +176,21 @@ if(test-path "$installDir\IEDriverServer.exe")
 }
 
 # ----------------------------------------------------------------------------------------------------
+# Selenium jar download
+# ----------------------------------------------------------------------------------------------------
+$version   ='2.42.2'
+$versionDir='2.42'
+$jarBasename="selenium-server-standalone-$version"
+$jarFilename="$jarBasename.jar"
+$jarUrl="http://selenium-release.storage.googleapis.com/$versionDir/$jarFilename"
+
+if(!(test-path "$jarFilename"))
+{
+    Write-Host "Fetching $jarUrl"
+    (new-object System.Net.WebClient).DownloadFile("$jarUrl", "$jarFilename")
+}
+
+# ----------------------------------------------------------------------------------------------------
 # Write batch file to start jar
 # ----------------------------------------------------------------------------------------------------
 
