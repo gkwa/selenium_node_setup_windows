@@ -200,7 +200,7 @@ set jar=selenium-server-standalone-2.42.2.jar
 java -jar %jar% ^
 --browser browserName=safari,maxInstances=5,platform=WINDOWS ^
 --browser browserName=firefox,maxInstances=5,platform=WINDOWS ^
---browser browserName=iexplore,maxInstances=5,platform=WINDOWS ^
+--browser browserName=*iexplore,maxInstances=5,platform=WINDOWS ^
 -Dwebdriver.ie.driver="c:/Selenium/IEDriver/x86/IEDriverServer.exe" ^
 --browser browserName=chrome,maxInstances=5,platform=WINDOWS ^
 -Dwebdriver.chrome.driver="c:/Selenium/ChromeDriver/chromedriver.exe" ^
@@ -214,7 +214,7 @@ set jar=selenium-server-standalone-2.42.2.jar
 java -jar %jar% ^
 --browser browserName=safari,maxInstances=5,platform=WINDOWS ^
 --browser browserName=firefox,maxInstances=5,platform=WINDOWS ^
---browser browserName=iexplore,maxInstances=5,platform=WINDOWS ^
+--browser browserName=*iexplore,maxInstances=5,platform=WINDOWS ^
 -Dwebdriver.ie.driver="c:/Selenium/IEDriver/x64/IEDriverServer.exe" ^
 --browser browserName=chrome,maxInstances=5,platform=WINDOWS ^
 -Dwebdriver.chrome.driver="c:/Selenium/ChromeDriver/chromedriver.exe" ^
