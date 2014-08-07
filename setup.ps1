@@ -185,7 +185,8 @@ set jar=selenium-server-standalone-2.42.2.jar
 java -jar %jar% ^
 -Dwebdriver.ie.driver="c:/Selenium/IEDriver/x86/IEDriverServer.exe" ^
 -Dwebdriver.chrome.driver="c:/Selenium/ChromeDriver/chromedriver.exe" ^
--role node -hub http://selenium-hub1.streambox.com:4444/grid/register
+-role node ^
+-hub http://selenium-hub1.streambox.com:4444/grid/register
 "@	| Out-File -encoding 'ASCII' "jar_x86.cmd"
 
     @"
@@ -194,5 +195,6 @@ set jar=selenium-server-standalone-2.42.2.jar
 java -jar %jar% ^
 -Dwebdriver.ie.driver="c:/Selenium/IEDriver/x64/IEDriverServer.exe" ^
 -Dwebdriver.chrome.driver="c:/Selenium/ChromeDriver/chromedriver.exe" ^
--role node -hub http://selenium-hub1.streambox.com:4444/grid/register
+-role node ^
+-hub http://selenium-hub1.streambox.com:4444/grid/register
 "@	| Out-File -encoding 'ASCII' "jar_x64.cmd"
