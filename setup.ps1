@@ -194,22 +194,26 @@ if(!(test-path "$jarFilename"))
 # Write batch file to start jar
 # ----------------------------------------------------------------------------------------------------
 
-    @"
+@"
 set jar=selenium-server-standalone-2.42.2.jar
 
 java -jar %jar% ^
--Dwebdriver.ie.driver="c:/Selenium/IEDriver/x86/IEDriverServer.exe" ^
--Dwebdriver.chrome.driver="c:/Selenium/ChromeDriver/chromedriver.exe" ^
+-browser browserName=safari,maxInstances=5,platform=WINDOWS ^
+-browser browserName=firefox,maxInstances=5,platform=WINDOWS ^
+-browser browserName=iexplore,maxInstances=5,platform=WINDOWS -Dwebdriver.ie.driver="c:/Selenium/IEDriver/x86/IEDriverServer.exe" ^
+-browser browserName=chrome,maxInstances=5,platform=WINDOWS -Dwebdriver.chrome.driver="c:/Selenium/ChromeDriver/chromedriver.exe" ^
 -role node ^
 -hub http://selenium-hub1.streambox.com:4444/grid/register
 "@	| Out-File -encoding 'ASCII' "jar_x86.cmd"
 
-    @"
+@"
 set jar=selenium-server-standalone-2.42.2.jar
 
 java -jar %jar% ^
--Dwebdriver.ie.driver="c:/Selenium/IEDriver/x64/IEDriverServer.exe" ^
--Dwebdriver.chrome.driver="c:/Selenium/ChromeDriver/chromedriver.exe" ^
+-browser browserName=safari,maxInstances=5,platform=WINDOWS ^
+-browser browserName=firefox,maxInstances=5,platform=WINDOWS ^
+-browser browserName=iexplore,maxInstances=5,platform=WINDOWS -Dwebdriver.ie.driver="c:/Selenium/IEDriver/x64/IEDriverServer.exe" ^
+-browser browserName=chrome,maxInstances=5,platform=WINDOWS -Dwebdriver.chrome.driver="c:/Selenium/ChromeDriver/chromedriver.exe" ^
 -role node ^
 -hub http://selenium-hub1.streambox.com:4444/grid/register
 "@	| Out-File -encoding 'ASCII' "jar_x64.cmd"
