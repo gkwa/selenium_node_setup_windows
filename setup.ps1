@@ -195,6 +195,10 @@ if(!(test-path "$jarFilename"))
 # ----------------------------------------------------------------------------------------------------
 
 @"
+taskkill /F /IM java.exe
+taskkill /F /IM chromedriver.exe
+taskkill /F /IM IEDriverServer.exe
+
 set jar=selenium-server-standalone-2.42.2.jar
 
 java -jar %jar% ^
@@ -207,6 +211,10 @@ java -jar %jar% ^
 "@	| Out-File -encoding 'ASCII' "jar_x86.cmd"
 
 @"
+taskkill /F /IM java.exe
+taskkill /F /IM chromedriver.exe
+taskkill /F /IM IEDriverServer.exe
+
 set jar=selenium-server-standalone-2.42.2.jar
 
 java -jar %jar% ^
