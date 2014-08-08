@@ -214,7 +214,6 @@ if(!(test-path "$jarFilename"))
 # Add Chromedriver to system path
 # ----------------------------------------------------------------------------------------------------
 try {
-    Set-ExecutionPolicy bypass
     Import-Module Pscx
     Add-PathVariable "c:\Selenium\ChromeDriver"
 } catch {
@@ -226,7 +225,6 @@ try {
     & msiexec /qn /i $msi
 }
 
-Set-ExecutionPolicy bypass
 Import-Module Pscx
 Add-PathVariable "c:\Selenium\ChromeDriver"
 
