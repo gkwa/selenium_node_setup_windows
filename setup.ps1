@@ -76,8 +76,13 @@ named iexplore.exe with the value of 0.
 
 if([IntPtr]::Size -eq 4) #32bit windows
 {
-    $result = new-itemproperty "hklm:\SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BFCACHE" `
-      -name "iexplore.exe" -value 0 -propertytype DWord -force
+    $p = 'hklm:\SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BFCACHE'
+    if(!(test-path "$p"))
+    {
+	$result = new-item "$p" -force
+    }
+
+    $result = new-itemproperty "$p" -name "iexplore.exe" -value 0 -propertytype DWord -force
 
 }
 
@@ -138,8 +143,12 @@ named iexplore.exe with the value of 0.
 
 if(!([IntPtr]::Size -eq 4)) #64bit windows
 {
-    $result = new-itemproperty "hklm:\SOFTWARE\Wow6432Node\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BFCACHE" `
-      -name "iexplore.exe" -value 0 -propertytype DWord -force
+    $p = "hklm:\SOFTWARE\Wow6432Node\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BFCACHE"
+    if(!(test-path "$p"))
+    {
+	$result = new-item "$p" -force
+    }
+    $result = new-itemproperty "$p" -name "iexplore.exe" -value 0 -propertytype DWord -force
 }
 
 
