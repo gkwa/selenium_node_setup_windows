@@ -56,35 +56,6 @@ if(test-path "$installDir\chromedriver.exe")
 # IE 32bit
 # ----------------------------------------------------------------------------------------------------
 
-<#
-
-https://code.google.com/p/selenium/wiki/InternetExplorerDriver
-
-For IE 11 only, you will need to set a registry entry on the target
-computer so that the driver can maintain a connection to the instance of
-Internet Explorer it creates. For 32-bit Windows installations, the key
-you must examine in the registry editor is
-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet
-Explorer\Main\FeatureControl\FEATURE_BFCACHE. For 64-bit Windows
-installations, the key is
-HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Internet
-Explorer\Main\FeatureControl\FEATURE_BFCACHE. Please note that the
-FEATURE_BFCACHE subkey may or may not be present, and should be created
-if it is not present. Important: Inside this key, create a DWORD value
-named iexplore.exe with the value of 0.
-#>
-
-if([IntPtr]::Size -eq 4) #32bit windows
-{
-    $p = 'hklm:\SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BFCACHE'
-    if(!(test-path "$p"))
-    {
-	$result = new-item "$p" -force
-    }
-
-    $result = new-itemproperty "$p" -name "iexplore.exe" -value 0 -propertytype DWord -force
-
-}
 
 # IEDriverServer_Win32_2.42.0.zip
 $ieVersion='2.42.0'
@@ -123,37 +94,6 @@ if(test-path "$installDir\IEDriverServer.exe")
 # IE 64bit
 # ----------------------------------------------------------------------------------------------------
 
-<#
-
-https://code.google.com/p/selenium/wiki/InternetExplorerDriver
-
-For IE 11 only, you will need to set a registry entry on the target
-computer so that the driver can maintain a connection to the instance of
-Internet Explorer it creates. For 32-bit Windows installations, the key
-you must examine in the registry editor is
-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet
-Explorer\Main\FeatureControl\FEATURE_BFCACHE. For 64-bit Windows
-installations, the key is
-HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Internet
-Explorer\Main\FeatureControl\FEATURE_BFCACHE. Please note that the
-FEATURE_BFCACHE subkey may or may not be present, and should be created
-if it is not present. Important: Inside this key, create a DWORD value
-named iexplore.exe with the value of 0.
-#>
-
-if(!([IntPtr]::Size -eq 4)) #64bit windows
-{
-    $p = "hklm:\SOFTWARE\Wow6432Node\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BFCACHE"
-    if(!(test-path "$p"))
-    {
-	$result = new-item "$p" -force
-    }
-    $result = new-itemproperty "$p" -name "iexplore.exe" -value 0 -propertytype DWord -force
-}
-
-
-
-
 # IEDriverServer_x64_2.42.0.zip
 $ieVersion='2.42.0'
 $ieVersionDir='2.42'
@@ -185,6 +125,49 @@ if(test-path "$installDir\IEDriverServer.exe")
     Write-Host "Deployed $installDir\IEDriverServer.exe"
 }else{
     Write-Error "Failed to deploy to $installDir\IEDriverServer.exe"
+}
+
+# ----------------------------------------------------------------------------------------------------
+# Registry key update: FEATURE_BFCACHE
+# ----------------------------------------------------------------------------------------------------
+
+<#
+
+https://code.google.com/p/selenium/wiki/InternetExplorerDriver
+
+For IE 11 only, you will need to set a registry entry on the target
+computer so that the driver can maintain a connection to the instance of
+Internet Explorer it creates. For 32-bit Windows installations, the key
+you must examine in the registry editor is
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet
+Explorer\Main\FeatureControl\FEATURE_BFCACHE. For 64-bit Windows
+installations, the key is
+HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Internet
+Explorer\Main\FeatureControl\FEATURE_BFCACHE. Please note that the
+FEATURE_BFCACHE subkey may or may not be present, and should be created
+if it is not present. Important: Inside this key, create a DWORD value
+named iexplore.exe with the value of 0.
+#>
+
+if([IntPtr]::Size -eq 4) #32bit windows
+{
+    $p = 'hklm:\SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BFCACHE'
+    if(!(test-path "$p"))
+    {
+	$result = new-item "$p" -force
+    }
+
+    $result = new-itemproperty "$p" -name "iexplore.exe" -value 0 -propertytype DWord -force
+
+}else{ #64bit windows
+
+    $p = "hklm:\SOFTWARE\Wow6432Node\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BFCACHE"
+    if(!(test-path "$p"))
+    {
+	$result = new-item "$p" -force
+    }
+
+    $result = new-itemproperty "$p" -name "iexplore.exe" -value 0 -propertytype DWord -force
 }
 
 # ----------------------------------------------------------------------------------------------------
