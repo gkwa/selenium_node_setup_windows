@@ -211,6 +211,26 @@ if(!(test-path "$jarFilename"))
 }
 
 # ----------------------------------------------------------------------------------------------------
+# Add Chromedriver to system path
+# ----------------------------------------------------------------------------------------------------
+try {
+    Set-ExecutionPolicy bypass
+    Import-Module Pscx
+    Add-PathVariable "c:\Selenium\ChromeDriver"
+} catch {
+    $msi='Pscx-3.1.0.msi'
+    if(!(test-path "$cdir\$msi"))
+    {
+	(new-object System.Net.WebClient).DownloadFile("http://installer-bin.streambox.com/$msi",$msi)
+    }
+    & msiexec /qn /i $msi
+}
+
+Set-ExecutionPolicy bypass
+Import-Module Pscx
+Add-PathVariable "c:\Selenium\ChromeDriver"
+
+# ----------------------------------------------------------------------------------------------------
 # Write batch file to start jar
 # ----------------------------------------------------------------------------------------------------
 
