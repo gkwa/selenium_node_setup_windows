@@ -6,6 +6,25 @@
 $ErrorActionPreference = 'stop'
 $WarningPreference = 'stop'
 
+function killprocess {
+    Param([string]$processname)
+
+    try{
+	While($true)
+	{
+	    $running = Get-Process $processname
+	    if($running) {
+		Stop-Process -processname $processname
+		sleep -m 1000; #give extra time for process to die
+		break
+	    }
+	    sleep -m 500
+	}
+    }catch{}
+}
+
+killprocess java
+
 $relFile='CHROME_LATEST_RELEASE'
 $cdir = (Get-Location).Path
 $relFileAbsPath = $cdir + "\" + "$relFile"
@@ -42,6 +61,8 @@ if(!(test-path "$installDir"))
 {
     $result = new-item -Path "$installDir" -ItemType Directory
 }
+
+killprocess chromedriver
 
 Copy "$cdir\chromedriver.exe" "$installDir"
 
@@ -81,6 +102,8 @@ if(!(test-path "$installDir"))
     $result = new-item -Path "$installDir" -ItemType Directory
 }
 
+killprocess IEDriverServer
+
 Copy "$cdir\IEDriverServer.exe" "$installDir"
 
 if(test-path "$installDir\IEDriverServer.exe")
@@ -117,6 +140,8 @@ if(!(test-path "$installDir"))
 {
     $result = new-item -Path "$installDir" -ItemType Directory
 }
+
+killprocess IEDriverServer
 
 Copy "$cdir\IEDriverServer.exe" "$installDir"
 
@@ -216,9 +241,3 @@ java -jar %jar% ^
 -role node ^
 -hub http://selenium-hub1.streambox.com:4444/grid/register
 "@	| Out-File -encoding 'ASCII' "jar_x64.cmd"
-
-@"
-taskkill /F /IM java.exe
-taskkill /F /IM chromedriver.exe
-taskkill /F /IM IEDriverServer.exe
-"@	| Out-File -encoding 'ASCII' "kill.cmd"
