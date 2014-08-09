@@ -260,3 +260,14 @@ java -jar %jar% ^
 -role node ^
 -hub http://selenium-hub1.streambox.com:4444/grid/register
 "@	| Out-File -encoding 'ASCII' "jar_x64.cmd"
+
+@"
+taskkill /F /IM chrome.exe 2>NUL
+taskkill /F /IM chromedriver.exe 2>NUL
+taskkill /F /IM firefox.exe 2>NUL
+taskkill /F /IM iedriverserver.exe 2>NUL
+taskkill /F /IM java.exe 2>NUL
+taskkill /F /IM opera.exe 2>NUL
+taskkill /F /IM safari.exe 2>NUL
+
+"@	| Out-File -encoding 'ASCII' "k.cmd"
