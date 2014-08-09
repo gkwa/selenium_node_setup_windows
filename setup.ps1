@@ -238,6 +238,7 @@ set jar=selenium-server-standalone-2.42.2.jar
 taskkill /F /IM java.exe 2>NUL
 
 java -jar %jar% ^
+-browser browserName=opera,maxInstances=5,platform=WINDOWS ^
 -browser browserName=safari,maxInstances=5,platform=WINDOWS ^
 -browser browserName=firefox,maxInstances=5,platform=WINDOWS ^
 -browser browserName="internet explorer",maxInstances=5,platform=WINDOWS ^
@@ -254,6 +255,7 @@ set jar=selenium-server-standalone-2.42.2.jar
 taskkill /F /IM java.exe 2>NUL
 
 java -jar %jar% ^
+-browser browserName=opera,maxInstances=5,platform=WINDOWS ^
 -browser browserName=safari,maxInstances=5,platform=WINDOWS ^
 -browser browserName=firefox,maxInstances=5,platform=WINDOWS ^
 -browser browserName="internet explorer",maxInstances=5,platform=WINDOWS ^
