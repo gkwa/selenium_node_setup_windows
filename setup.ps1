@@ -235,7 +235,7 @@ Add-PathVariable "c:\Selenium\ChromeDriver"
 @"
 set jar=selenium-server-standalone-2.42.2.jar
 
-taskkill /F /IM java.exe
+taskkill /F /IM java.exe 2>NUL
 
 java -jar %jar% ^
 -browser browserName=safari,maxInstances=5,platform=WINDOWS ^
@@ -251,7 +251,7 @@ java -jar %jar% ^
 @"
 set jar=selenium-server-standalone-2.42.2.jar
 
-taskkill /F /IM java.exe
+taskkill /F /IM java.exe 2>NUL
 
 java -jar %jar% ^
 -browser browserName=safari,maxInstances=5,platform=WINDOWS ^
