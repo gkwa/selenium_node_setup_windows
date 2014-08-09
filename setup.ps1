@@ -236,11 +236,11 @@ Add-PathVariable "c:\Selenium\ChromeDriver"
 set jar=selenium-server-standalone-2.42.2.jar
 
 java -jar %jar% ^
---browser browserName=safari,maxInstances=5,platform=WINDOWS ^
---browser browserName=firefox,maxInstances=5,platform=WINDOWS ^
---browser browserName=*iexplore,maxInstances=5,platform=WINDOWS ^
+-browser browserName=safari,maxInstances=5,platform=WINDOWS ^
+-browser browserName=firefox,maxInstances=5,platform=WINDOWS ^
+-browser browserName="internet explorer",maxInstances=5,platform=WINDOWS ^
 -Dwebdriver.ie.driver="${env:systemdrive}/Selenium/IEDriver/x86/IEDriverServer.exe" ^
---browser browserName=chrome,maxInstances=5,platform=WINDOWS ^
+-browser browserName=chrome,maxInstances=5,platform=WINDOWS ^
 -Dwebdriver.chrome.driver="${env:systemdrive}/Selenium/ChromeDriver/chromedriver.exe" ^
 -role node ^
 -hub http://selenium-hub1.streambox.com:4444/grid/register
@@ -250,11 +250,11 @@ java -jar %jar% ^
 set jar=selenium-server-standalone-2.42.2.jar
 
 java -jar %jar% ^
---browser browserName=safari,maxInstances=5,platform=WINDOWS ^
---browser browserName=firefox,maxInstances=5,platform=WINDOWS ^
---browser browserName=*iexplore,maxInstances=5,platform=WINDOWS ^
+-browser browserName=safari,maxInstances=5,platform=WINDOWS ^
+-browser browserName=firefox,maxInstances=5,platform=WINDOWS ^
+-browser browserName="internet explorer",maxInstances=5,platform=WINDOWS ^
 -Dwebdriver.ie.driver="${env:systemdrive}/Selenium/IEDriver/x64/IEDriverServer.exe" ^
---browser browserName=chrome,maxInstances=5,platform=WINDOWS ^
+-browser browserName=chrome,maxInstances=5,platform=WINDOWS ^
 -Dwebdriver.chrome.driver="${env:systemdrive}/Selenium/ChromeDriver/chromedriver.exe" ^
 -role node ^
 -hub http://selenium-hub1.streambox.com:4444/grid/register
