@@ -79,6 +79,8 @@ killprocess chromedriver
 
 Copy "$cdir\chromedriver.exe" "$installDir"
 
+Add-PathVariable -Target User -Name Path -Value $installDir
+
 if(test-path "$installDir\chromedriver.exe")
 {
     Write-Host "Deployed $installDir\chromedriver.exe"
@@ -222,11 +224,6 @@ if(!(test-path "$jarFilename"))
     Write-Host "Fetching $jarUrl"
     (new-object System.Net.WebClient).DownloadFile("$jarUrl", "$jarFilename")
 }
-
-# ----------------------------------------------------------------------------------------------------
-# Add Chromedriver to system path
-# ----------------------------------------------------------------------------------------------------
-Add-PathVariable "c:\Selenium\ChromeDriver"
 
 # ----------------------------------------------------------------------------------------------------
 # Write batch file to start jar
