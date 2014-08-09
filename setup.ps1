@@ -241,9 +241,9 @@ java -jar %jar% ^
 -browser browserName=safari,maxInstances=5,platform=WINDOWS ^
 -browser browserName=firefox,maxInstances=5,platform=WINDOWS ^
 -browser browserName="internet explorer",maxInstances=5,platform=WINDOWS ^
--Dwebdriver.ie.driver="${env:systemdrive}/Selenium/IEDriver/x86/IEDriverServer.exe" ^
+-Dwebdriver.ie.driver="$systemdrive/Selenium/IEDriver/x86/IEDriverServer.exe" ^
 -browser browserName=chrome,maxInstances=5,platform=WINDOWS ^
--Dwebdriver.chrome.driver="${env:systemdrive}/Selenium/ChromeDriver/chromedriver.exe" ^
+-Dwebdriver.chrome.driver="$systemdrive/Selenium/ChromeDriver/chromedriver.exe" ^
 -role node ^
 -hub http://selenium-hub1.streambox.com:4444/grid/register
 "@	| Out-File -encoding 'ASCII' "jar_x86.cmd"
@@ -257,9 +257,9 @@ java -jar %jar% ^
 -browser browserName=safari,maxInstances=5,platform=WINDOWS ^
 -browser browserName=firefox,maxInstances=5,platform=WINDOWS ^
 -browser browserName="internet explorer",maxInstances=5,platform=WINDOWS ^
--Dwebdriver.ie.driver="${env:systemdrive}/Selenium/IEDriver/x64/IEDriverServer.exe" ^
+-Dwebdriver.ie.driver="$systemdrive/Selenium/IEDriver/x64/IEDriverServer.exe" ^
 -browser browserName=chrome,maxInstances=5,platform=WINDOWS ^
--Dwebdriver.chrome.driver="${env:systemdrive}/Selenium/ChromeDriver/chromedriver.exe" ^
+-Dwebdriver.chrome.driver="$systemdrive/Selenium/ChromeDriver/chromedriver.exe" ^
 -role node ^
 -hub http://selenium-hub1.streambox.com:4444/grid/register
 "@	| Out-File -encoding 'ASCII' "jar_x64.cmd"
