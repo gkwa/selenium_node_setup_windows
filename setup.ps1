@@ -28,7 +28,7 @@ function killprocess {
 	    $running = Get-Process $processname
 	    if($running) {
 		Stop-Process -processname $processname
-		sleep -m 2000; #give extra time for process to die
+		sleep -m 4000; #give extra time for process to die
 		break
 	    }
 	    sleep -m 500
