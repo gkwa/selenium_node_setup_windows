@@ -11,3 +11,4 @@ clean:
 	rm -f LATEST_RELEASE
 	rm -f jar_x64.cmd
 	rm -f jar_x86.cmd
+	rm -f k.cmd
