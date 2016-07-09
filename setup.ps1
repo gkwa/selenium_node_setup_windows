@@ -240,6 +240,8 @@ java -jar selenium-server-standalone-$version.jar ^
 -browser browserName=chrome,maxInstances=5,platform=WINDOWS ^
 -Dwebdriver.chrome.driver="$systemdrive/Selenium/ChromeDriver/chromedriver.exe" ^
 -role node ^
+-port 5555 ^
+-host node1.streambox.com ^
 -hub http://selenium-hub1.streambox.com:4444/grid/register
 "@	| Out-File -encoding 'ASCII' "jar_x86.cmd"
 
@@ -254,6 +256,8 @@ java -jar selenium-server-standalone-$version.jar ^
 -browser browserName=chrome,maxInstances=5,platform=WINDOWS ^
 -Dwebdriver.chrome.driver="$systemdrive/Selenium/ChromeDriver/chromedriver.exe" ^
 -role node ^
+-port 5555 ^
+-host node1.streambox.com ^
 -hub http://selenium-hub1.streambox.com:4444/grid/register
 "@	| Out-File -encoding 'ASCII' "jar_x64.cmd"
 
