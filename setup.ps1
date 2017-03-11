@@ -12,9 +12,8 @@ try {
     Import-Module Pscx
 } catch {
     $msi='Pscx-3.1.0.msi'
-    if(!(test-path "$cdir\$msi"))
-    {
-	(new-object System.Net.WebClient).DownloadFile("http://installer-bin.streambox.com/$msi",$msi)
+    if(!(test-path "$cdir\$msi")) {
+        (new-object System.Net.WebClient).DownloadFile("http://installer-bin.streambox.com/$msi",$msi)
     }
     & msiexec /qn /i $msi
 }
@@ -23,17 +22,17 @@ function killprocess {
     Param([string]$processname)
 
     try{
-	While($true)
-	{
-	    $running = Get-Process $processname
-	    if($running) {
-		Stop-Process -processname $processname
-		sleep -m 4000; #give extra time for process to die
-		break
-	    }
-	    sleep -m 500
-	}
-    }catch{}
+        While($true) {
+            $running = Get-Process $processname
+            if($running) {
+                Stop-Process -processname $processname
+                sleep -m 4000; #give extra time for process to die
+                break
+            }
+            sleep -m 500
+        }
+    }catch{
+    }
 }
 
 killprocess java
@@ -45,13 +44,11 @@ $systemdrive="${env:systemdrive}"
 
 $driverZip = "chromedriver_win32.zip"
 
-if(!(test-path "$cdir\7za.exe"))
-{
+if(!(test-path "$cdir\7za.exe")) {
     (new-object System.Net.WebClient).DownloadFile("http://installer-bin.streambox.com/7za.exe", "7za.exe")
 }
 
-if(!(test-path "$relFileAbsPath"))
-{
+if(!(test-path "$relFileAbsPath")) {
     (new-object System.Net.WebClient).DownloadFile('http://chromedriver.storage.googleapis.com/LATEST_RELEASE','CHROME_LATEST_RELEASE')
 }
 
@@ -59,8 +56,7 @@ $chromeDriverVersion = gc $relFile
 
 $zipURL = "http://chromedriver.storage.googleapis.com/$chromeDriverVersion/$driverZip"
 
-if(!(test-path "$cdir\$driverZip"))
-{
+if(!(test-path "$cdir\$driverZip")) {
     Write-Host "Fetching $zipURL..."
     (new-object System.Net.WebClient).DownloadFile($zipURL,$driverZip)
 }
@@ -70,8 +66,7 @@ Remove-Item 7za_out.txt
 
 $installDir = "$systemdrive\Selenium\ChromeDriver"
 
-if(!(test-path "$installDir"))
-{
+if(!(test-path "$installDir")) {
     $result = new-item -Path "$installDir" -ItemType Directory
 }
 
@@ -81,10 +76,9 @@ Copy "$cdir\chromedriver.exe" "$installDir"
 
 Add-PathVariable -Target User -Name Path -Value $installDir
 
-if(test-path "$installDir\chromedriver.exe")
-{
+if(test-path "$installDir\chromedriver.exe") {
     Write-Host "Deployed $installDir\chromedriver.exe"
-}else{
+} else {
     Write-Error "Failed to deploy to $installDir\chromedriver.exe"
 }
 
@@ -101,8 +95,7 @@ $ieDriverZip="$ieDriverZipBasename.zip"
 
 $zipUrl = "http://selenium-release.storage.googleapis.com/$ieVersionDir/$ieDriverZip"
 
-if(!(test-path "$cdir\$ieDriverZip"))
-{
+if(!(test-path "$cdir\$ieDriverZip")) {
     Write-Host "Fetching $zipUrl"
     (new-object System.Net.WebClient).DownloadFile("$zipUrl", "$ieDriverZip")
 }
@@ -112,8 +105,7 @@ Remove-Item "$ieDriverZip.log"
 
 $installDir = "$systemdrive\Selenium\IEDriver\x86"
 
-if(!(test-path "$installDir"))
-{
+if(!(test-path "$installDir")) {
     $result = new-item -Path "$installDir" -ItemType Directory
 }
 
@@ -121,8 +113,7 @@ killprocess IEDriverServer
 
 Copy "$cdir\IEDriverServer.exe" "$installDir"
 
-if(test-path "$installDir\IEDriverServer.exe")
-{
+if(test-path "$installDir\IEDriverServer.exe") {
     Write-Host "Deployed $installDir\IEDriverServer.exe"
 }else{
     Write-Error "Failed to deploy to $installDir\IEDriverServer.exe"
@@ -140,8 +131,7 @@ $ieDriverZip="$ieDriverZipBasename.zip"
 
 $zipUrl = "http://selenium-release.storage.googleapis.com/$ieVersionDir/$ieDriverZip"
 
-if(!(test-path "$cdir\$ieDriverZip"))
-{
+if(!(test-path "$cdir\$ieDriverZip")) {
     Write-Host "Fetching $zipUrl"
     (new-object System.Net.WebClient).DownloadFile("$zipUrl", "$ieDriverZip")
 }
@@ -151,8 +141,7 @@ Remove-Item "$ieDriverZip.log"
 
 $installDir = "$systemdrive\Selenium\IEDriver\x64"
 
-if(!(test-path "$installDir"))
-{
+if(!(test-path "$installDir")) {
     $result = new-item -Path "$installDir" -ItemType Directory
 }
 
@@ -160,8 +149,7 @@ killprocess IEDriverServer
 
 Copy "$cdir\IEDriverServer.exe" "$installDir"
 
-if(test-path "$installDir\IEDriverServer.exe")
-{
+if(test-path "$installDir\IEDriverServer.exe") {
     Write-Host "Deployed $installDir\IEDriverServer.exe"
 }else{
     Write-Error "Failed to deploy to $installDir\IEDriverServer.exe"
@@ -189,22 +177,21 @@ if it is not present. Important: Inside this key, create a DWORD value
 named iexplore.exe with the value of 0.
 #>
 
-if([IntPtr]::Size -eq 4) #32bit windows
-{
+#32bit windows
+if([IntPtr]::Size -eq 4) {
     $p = 'hklm:\SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BFCACHE'
-    if(!(test-path "$p"))
-    {
-	$result = new-item "$p" -force
+    if(!(test-path "$p")) {
+        $result = new-item "$p" -force
     }
 
     $result = new-itemproperty "$p" -name "iexplore.exe" -value 0 -propertytype DWord -force
 
-}else{ #64bit windows
+} else {
+    #64bit windows
 
     $p = "hklm:\SOFTWARE\Wow6432Node\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BFCACHE"
-    if(!(test-path "$p"))
-    {
-	$result = new-item "$p" -force
+    if(!(test-path "$p")) {
+        $result = new-item "$p" -force
     }
 
     $result = new-itemproperty "$p" -name "iexplore.exe" -value 0 -propertytype DWord -force
@@ -219,8 +206,7 @@ $jarBasename="selenium-server-standalone-$version"
 $jarFilename="$jarBasename.jar"
 $jarUrl="http://selenium-release.storage.googleapis.com/$versionDir/$jarFilename"
 
-if(!(test-path "$jarFilename"))
-{
+if(!(test-path "$jarFilename")) {
     Write-Host "Fetching $jarUrl"
     (new-object System.Net.WebClient).DownloadFile("$jarUrl", "$jarFilename")
 }
