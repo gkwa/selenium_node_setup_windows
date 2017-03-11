@@ -11,11 +11,7 @@ $WarningPreference = 'stop'
 try {
     Import-Module Pscx
 } catch {
-    $msi='Pscx-3.1.0.msi'
-    if(!(test-path "$cdir\$msi")) {
-        (new-object System.Net.WebClient).DownloadFile("http://installer-bin.streambox.com/$msi",$msi)
-    }
-    & msiexec /qn /i $msi
+	& cinst --yes pscx
 }
 
 function killprocess {
