@@ -44,10 +44,6 @@ $systemdrive="${env:systemdrive}"
 
 $driverZip = "chromedriver_win32.zip"
 
-if(!(test-path "$cdir\7za.exe")) {
-    (new-object System.Net.WebClient).DownloadFile("http://installer-bin.streambox.com/7za.exe", "7za.exe")
-}
-
 if(!(test-path "$relFileAbsPath")) {
     (new-object System.Net.WebClient).DownloadFile('http://chromedriver.storage.googleapis.com/LATEST_RELEASE','CHROME_LATEST_RELEASE')
 }
@@ -61,8 +57,8 @@ if(!(test-path "$cdir\$driverZip")) {
     (new-object System.Net.WebClient).DownloadFile($zipURL,$driverZip)
 }
 
-& '.\7za.exe' x -y $driverZip >7za_out.txt
-Remove-Item 7za_out.txt
+&cmd /c 7z x -y $driverZip >7z_out.txt
+Remove-Item 7z_out.txt
 
 $installDir = "$systemdrive\Selenium\ChromeDriver"
 
@@ -100,7 +96,7 @@ if(!(test-path "$cdir\$ieDriverZip")) {
     (new-object System.Net.WebClient).DownloadFile("$zipUrl", "$ieDriverZip")
 }
 
-& '.\7za.exe' x -y $ieDriverZip >"$ieDriverZip.log"
+&cmd /c 7z x -y $ieDriverZip >"$ieDriverZip.log"
 Remove-Item "$ieDriverZip.log"
 
 $installDir = "$systemdrive\Selenium\IEDriver\x86"
@@ -136,7 +132,7 @@ if(!(test-path "$cdir\$ieDriverZip")) {
     (new-object System.Net.WebClient).DownloadFile("$zipUrl", "$ieDriverZip")
 }
 
-& '.\7za.exe' x -y $ieDriverZip >"$ieDriverZip.log"
+&cmd /c 7z x -y $ieDriverZip >"$ieDriverZip.log"
 Remove-Item "$ieDriverZip.log"
 
 $installDir = "$systemdrive\Selenium\IEDriver\x64"
