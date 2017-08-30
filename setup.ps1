@@ -79,9 +79,9 @@ if(test-path "$installDir\chromedriver.exe") {
 # ----------------------------------------------------------------------------------------------------
 
 
-# IEDriverServer_Win32_2.53.1.zip
-$ieVersion='2.53.1'
-$ieVersionDir='2.53'
+# IEDriverServer_Win32_3.5.1.zip
+$ieVersion='3.5.1'
+$ieVersionDir='3.5'
 $ieDriverZipBasename="IEDriverServer_Win32_${ieVersion}"
 $ieDriverZip="$ieDriverZipBasename.zip"
 
@@ -115,9 +115,9 @@ if(test-path "$installDir\IEDriverServer.exe") {
 # IE 64bit
 # ----------------------------------------------------------------------------------------------------
 
-# IEDriverServer_x64_2.53.1.zip
-$ieVersion='2.53.1'
-$ieVersionDir='2.53'
+# IEDriverServer_x64_3.5.1.zip
+$ieVersion='3.5.1'
+$ieVersionDir='3.5'
 $ieDriverZipBasename="IEDriverServer_x64_${ieVersion}"
 $ieDriverZip="$ieDriverZipBasename.zip"
 
@@ -192,8 +192,8 @@ if([IntPtr]::Size -eq 4) {
 # ----------------------------------------------------------------------------------------------------
 # Selenium jar download
 # ----------------------------------------------------------------------------------------------------
-$version   ='2.53.1'
-$versionDir='2.53'
+$version   ='3.5.3'
+$versionDir='3.5'
 $jarBasename="selenium-server-standalone-$version"
 $jarFilename="$jarBasename.jar"
 $jarUrl="http://selenium-release.storage.googleapis.com/$versionDir/$jarFilename"
