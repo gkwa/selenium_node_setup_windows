@@ -222,7 +222,7 @@ java ^
 -browser browserName=chrome,maxInstances=5,platform=WINDOWS ^
 -role node ^
 -port 5555 ^
--host node1.streambox.com ^
+-host selenium-node1.streambox.com ^
 -hub http://selenium-hub1.streambox.com:4444/grid/register
 "@	| Out-File -encoding 'ASCII' "jar_x86.cmd"
 
@@ -239,7 +239,7 @@ java ^
 -browser browserName=chrome,maxInstances=5,platform=WINDOWS ^
 -role node ^
 -port 5555 ^
--host node1.streambox.com ^
+-host selenium-node1.streambox.com ^
 -hub http://selenium-hub1.streambox.com:4444/grid/register
 "@	| Out-File -encoding 'ASCII' "jar_x64.cmd"
 
