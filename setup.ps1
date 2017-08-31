@@ -7,6 +7,7 @@ $ErrorActionPreference = 'stop'
 $WarningPreference = 'stop'
 
 
+cinst --yes 7zip.commandline
 
 try {
     Import-Module Pscx
