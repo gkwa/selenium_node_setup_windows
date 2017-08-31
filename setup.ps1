@@ -42,7 +42,7 @@ $systemdrive="${env:systemdrive}"
 $driverZip = "chromedriver_win32.zip"
 
 if(!(test-path "$relFileAbsPath")) {
-    Invoke-WebRequest -Uri http://chromedriver.storage.googleapis.com/LATEST_RELEASE -OutFile CHROME_LATEST_RELEASE
+    (new-object System.Net.WebClient).DownloadFile('http://chromedriver.storage.googleapis.com/LATEST_RELEASE','CHROME_LATEST_RELEASE')
 }
 
 $chromeDriverVersion = gc $relFile
@@ -51,7 +51,7 @@ $zipURL = "http://chromedriver.storage.googleapis.com/$chromeDriverVersion/$driv
 
 if(!(test-path "$cdir\$driverZip")) {
     Write-Host "Fetching $zipURL..."
-    Invoke-WebRequest -Uri $zipURL -OutFile $driverZip
+    (new-object System.Net.WebClient).DownloadFile($zipURL,$driverZip)
 }
 
 &cmd /c 7z x -y $driverZip >7z_out.txt
@@ -90,7 +90,7 @@ $zipUrl = "http://selenium-release.storage.googleapis.com/$ieVersionDir/$ieDrive
 
 if(!(test-path "$cdir\$ieDriverZip")) {
     Write-Host "Fetching $zipUrl"
-    Invoke-WebRequest -Uri $zipURL -OutFile $ieDriverZip
+    (new-object System.Net.WebClient).DownloadFile("$zipUrl", "$ieDriverZip")
 }
 
 &cmd /c 7z x -y $ieDriverZip >"$ieDriverZip.log"
@@ -126,7 +126,7 @@ $zipUrl = "http://selenium-release.storage.googleapis.com/$ieVersionDir/$ieDrive
 
 if(!(test-path "$cdir\$ieDriverZip")) {
     Write-Host "Fetching $zipUrl"
-    Invoke-WebRequest -Uri $zipURL -OutFile $ieDriverZip
+    (new-object System.Net.WebClient).DownloadFile("$zipUrl", "$ieDriverZip")
 }
 
 &cmd /c 7z x -y $ieDriverZip >"$ieDriverZip.log"
@@ -201,7 +201,7 @@ $jarUrl="http://selenium-release.storage.googleapis.com/$versionDir/$jarFilename
 
 if(!(test-path "$jarFilename")) {
     Write-Host "Fetching $jarUrl"
-    Invoke-WebRequest -Uri $jarUrl -OutFile $jarFilename
+    (new-object System.Net.WebClient).DownloadFile("$jarUrl", "$jarFilename")
 }
 
 # ----------------------------------------------------------------------------------------------------
