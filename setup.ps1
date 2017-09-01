@@ -6,16 +6,6 @@
 $ErrorActionPreference = 'stop'
 $WarningPreference = 'stop'
 
-
-cinst --yes jdk8
-cinst --yes 7zip.commandline
-
-try {
-    Import-Module Pscx
-} catch {
-	& cinst --yes pscx
-}
-
 function killprocess {
     Param([string]$processname)
 
@@ -34,120 +24,28 @@ function killprocess {
 }
 
 killprocess java
+cinst --yes jdk8
 
-$relFile='CHROME_LATEST_RELEASE'
-$cdir = (Get-Location).Path
-$relFileAbsPath = $cdir + "\" + "$relFile"
-$systemdrive="${env:systemdrive}"
-
-$driverZip = "chromedriver_win32.zip"
-
-if(!(test-path "$relFileAbsPath")) {
-    Invoke-WebRequest -Uri http://chromedriver.storage.googleapis.com/LATEST_RELEASE -OutFile CHROME_LATEST_RELEASE
-}
-
-$chromeDriverVersion = gc $relFile
-
-$zipURL = "http://chromedriver.storage.googleapis.com/$chromeDriverVersion/$driverZip"
-
-if(!(test-path "$cdir\$driverZip")) {
-    Write-Host "Fetching $zipURL..."
-    Invoke-WebRequest -Uri $zipURL -OutFile $driverZip
-}
-
-&cmd /c 7z x -y $driverZip >7z_out.txt
-Remove-Item 7z_out.txt
-
-$installDir = "$systemdrive\Selenium\ChromeDriver"
-
-if(!(test-path "$installDir")) {
-    $result = new-item -Path "$installDir" -ItemType Directory
-}
-
+killprocess chrome
 killprocess chromedriver
+cinst --yes GoogleChrome
+cinst --yes selenium-chrome-driver
 
-Copy "$cdir\chromedriver.exe" "$installDir"
+killprocess geckodriver
+killprocess firefox
+cinst --yes Firefox
+cinst --yes selenium-gecko-driver
 
-Add-PathVariable -Target User -Name Path -Value $installDir
+killprocess opera
+killprocess operadriver
+cinst --yes opera
+cinst --yes selenium-opera-driver
 
-if(test-path "$installDir\chromedriver.exe") {
-    Write-Host "Deployed $installDir\chromedriver.exe"
-} else {
-    Write-Error "Failed to deploy to $installDir\chromedriver.exe"
-}
+killprocess iedriverserver
+cinst --yes selenium-ie-driver
 
-# ----------------------------------------------------------------------------------------------------
-# IE 32bit
-# ----------------------------------------------------------------------------------------------------
-
-
-# IEDriverServer_Win32_3.5.1.zip
-$ieVersion='3.5.1'
-$ieVersionDir='3.5'
-$ieDriverZipBasename="IEDriverServer_Win32_${ieVersion}"
-$ieDriverZip="$ieDriverZipBasename.zip"
-
-$zipUrl = "http://selenium-release.storage.googleapis.com/$ieVersionDir/$ieDriverZip"
-
-if(!(test-path "$cdir\$ieDriverZip")) {
-    Write-Host "Fetching $zipUrl"
-    Invoke-WebRequest -Uri $zipURL -OutFile $ieDriverZip
-}
-
-&cmd /c 7z x -y $ieDriverZip >"$ieDriverZip.log"
-Remove-Item "$ieDriverZip.log"
-
-$installDir = "$systemdrive\Selenium\IEDriver\x86"
-
-if(!(test-path "$installDir")) {
-    $result = new-item -Path "$installDir" -ItemType Directory
-}
-
-killprocess IEDriverServer
-
-Copy "$cdir\IEDriverServer.exe" "$installDir"
-
-if(test-path "$installDir\IEDriverServer.exe") {
-    Write-Host "Deployed $installDir\IEDriverServer.exe"
-}else{
-    Write-Error "Failed to deploy to $installDir\IEDriverServer.exe"
-}
-
-# ----------------------------------------------------------------------------------------------------
-# IE 64bit
-# ----------------------------------------------------------------------------------------------------
-
-# IEDriverServer_x64_3.5.1.zip
-$ieVersion='3.5.1'
-$ieVersionDir='3.5'
-$ieDriverZipBasename="IEDriverServer_x64_${ieVersion}"
-$ieDriverZip="$ieDriverZipBasename.zip"
-
-$zipUrl = "http://selenium-release.storage.googleapis.com/$ieVersionDir/$ieDriverZip"
-
-if(!(test-path "$cdir\$ieDriverZip")) {
-    Write-Host "Fetching $zipUrl"
-    Invoke-WebRequest -Uri $zipURL -OutFile $ieDriverZip
-}
-
-&cmd /c 7z x -y $ieDriverZip >"$ieDriverZip.log"
-Remove-Item "$ieDriverZip.log"
-
-$installDir = "$systemdrive\Selenium\IEDriver\x64"
-
-if(!(test-path "$installDir")) {
-    $result = new-item -Path "$installDir" -ItemType Directory
-}
-
-killprocess IEDriverServer
-
-Copy "$cdir\IEDriverServer.exe" "$installDir"
-
-if(test-path "$installDir\IEDriverServer.exe") {
-    Write-Host "Deployed $installDir\IEDriverServer.exe"
-}else{
-    Write-Error "Failed to deploy to $installDir\IEDriverServer.exe"
-}
+killprocess MicrosoftWebDriver
+cinst --yes selenium-edge-driver
 
 # ----------------------------------------------------------------------------------------------------
 # Registry key update: FEATURE_BFCACHE
@@ -213,8 +111,11 @@ if(!(test-path "$jarFilename")) {
 taskkill /F /IM java.exe 2>NUL
 
 java ^
--Dwebdriver.ie.driver="$systemdrive/Selenium/IEDriver/x86/IEDriverServer.exe" ^
--Dwebdriver.chrome.driver="$systemdrive/Selenium/ChromeDriver/chromedriver.exe" ^
+-Dwebdriver.ie.driver="$env:systemdrive/tools/selenium/IEDriverServer.exe" ^
+-Dwebdriver.chrome.driver="$env:systemdrive/tools/selenium/chromedriver.exe" ^
+-Dwebdriver.gecko.driver="$env:systemdrive/tools/selenium/geckodriver.exe" ^
+-Dwebdriver.opera.driver="$env:systemdrive/tools/selenium/operadriver.exe" ^
+-Dwebdriver.edge.driver="$env:systemdrive/tools/selenium/MicrosoftWebDriver.exe" ^
 -jar selenium-server-standalone-$version.jar ^
 -browser browserName=safari,maxInstances=5,platform=WINDOWS ^
 -browser browserName=firefox,maxInstances=5,platform=WINDOWS ^
@@ -230,8 +131,11 @@ java ^
 taskkill /F /IM java.exe 2>NUL
 
 java ^
--Dwebdriver.ie.driver="$systemdrive/Selenium/IEDriver/x64/IEDriverServer.exe" ^
--Dwebdriver.chrome.driver="$systemdrive/Selenium/ChromeDriver/chromedriver.exe" ^
+-Dwebdriver.ie.driver="$env:systemdrive/tools/selenium/IEDriverServer.exe" ^
+-Dwebdriver.chrome.driver="$env:systemdrive/tools/selenium/chromedriver.exe" ^
+-Dwebdriver.gecko.driver="$env:systemdrive/tools/selenium/geckodriver.exe" ^
+-Dwebdriver.opera.driver="$env:systemdrive/tools/selenium/operadriver.exe" ^
+-Dwebdriver.edge.driver="$env:systemdrive/tools/selenium/MicrosoftWebDriver.exe" ^
 -jar selenium-server-standalone-$version.jar ^
 -browser browserName=safari,maxInstances=5,platform=WINDOWS ^
 -browser browserName=firefox,maxInstances=5,platform=WINDOWS ^
@@ -244,6 +148,10 @@ java ^
 "@	| Out-File -encoding 'ASCII' "jar_x64.cmd"
 
 @"
+taskkill /F /IM operadriver.exe 2>NUL
+taskkill /F /IM geckodriver.exe 2>NUL
+taskkill /F /IM IEDriverServer.exe 2>NUL
+taskkill /F /IM MicrosoftWebDriver.exe 2>NUL
 taskkill /F /IM chrome.exe 2>NUL
 taskkill /F /IM chromedriver.exe 2>NUL
 taskkill /F /IM firefox.exe 2>NUL
@@ -251,5 +159,4 @@ taskkill /F /IM iedriverserver.exe 2>NUL
 taskkill /F /IM java.exe 2>NUL
 taskkill /F /IM opera.exe 2>NUL
 taskkill /F /IM safari.exe 2>NUL
-
 "@	| Out-File -encoding 'ASCII' "k.cmd"
